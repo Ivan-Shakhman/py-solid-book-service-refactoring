@@ -1,19 +1,25 @@
-class DisplayBook:
-    DISPLAYED_TYPES = ["console", "reverse"]
+class BaseDisplayBook():
+    DISPLAYED_TYPES = []
 
-    def console_display(self) -> None:
-        print(self.content)
-
-    def reverse_display(self) -> None:
-        print(self.content[::-1])
+    def use_display(self):
+        pass
 
     def display(self, display_type: str) -> None:
         if display_type not in self.DISPLAYED_TYPES:
             raise ValueError(f"Unknown display type: {display_type}")
 
-        match display_type:
-            case "console":
-                self.console_display()
+        self.use_display()
 
-            case "reverse":
-                self.reverse_display()
+
+class ConsoleDisplayBook(BaseDisplayBook):
+    DISPLAYED_TYPES = super().DISPLAYED_TYPES + ["console"]
+
+    def use_display(self):
+        print(self.content)
+
+
+class ReverseDisplayBook(BaseDisplayBook):
+    DISPLAYED_TYPES = super().DISPLAYED_TYPES + ["reverse"]
+
+    def use_display(self):
+        print(self.content[::-1])
