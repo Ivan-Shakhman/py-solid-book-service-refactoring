@@ -6,7 +6,7 @@ from xml.etree import ElementTree
 class BaseSerializeBook(ABC):
 
     @abstractmethod
-    def serialize(self, method_type: str):
+    def serialize(self, method_type: str) -> None:
         pass
 
 
@@ -27,11 +27,12 @@ class XmlSerializeBook(BaseSerializeBook):
 
 class JsonSerializeBook(BaseSerializeBook):
 
-    def serialize(self, method_type: str):
+    def serialize(self, method_type: str) -> str:
         if method_type == "json":
             return json.dumps({"title": self.title, "content": self.content})
         else:
             super().serialize(method_type)
+
 
 class SerializeBook(JsonSerializeBook, XmlSerializeBook):
     pass

@@ -16,6 +16,7 @@ class ConsoleDisplayBook(BaseDisplayBook):
         else:
             super().display(display_type)
 
+
 class ReverseDisplayBook(BaseDisplayBook):
 
     def display(self, display_type: str) -> None:
