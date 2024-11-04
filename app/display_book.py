@@ -1,25 +1,29 @@
-class BaseDisplayBook():
-    DISPLAYED_TYPES = []
+from abc import ABC, abstractmethod
 
-    def use_display(self):
-        pass
 
+class BaseDisplayBook(ABC):
+
+    @abstractmethod
     def display(self, display_type: str) -> None:
-        if display_type not in self.DISPLAYED_TYPES:
-            raise ValueError(f"Unknown display type: {display_type}")
-
-        self.use_display()
+        pass
 
 
 class ConsoleDisplayBook(BaseDisplayBook):
-    DISPLAYED_TYPES = super().DISPLAYED_TYPES + ["console"]
 
-    def use_display(self):
-        print(self.content)
-
+    def display(self, display_type: str) -> None:
+        if display_type == "console":
+            print(self.content)
+        else:
+            super().display(display_type)
 
 class ReverseDisplayBook(BaseDisplayBook):
-    DISPLAYED_TYPES = super().DISPLAYED_TYPES + ["reverse"]
 
-    def use_display(self):
-        print(self.content[::-1])
+    def display(self, display_type: str) -> None:
+        if display_type == "reverse":
+            print(self.content[::-1])
+        else:
+            super().display(display_type)
+
+
+class DisplayBook(ConsoleDisplayBook, ReverseDisplayBook):
+    pass

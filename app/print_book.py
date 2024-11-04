@@ -1,27 +1,30 @@
-class BasePrintBook:
-    PRINT_TYPES = []
+from abc import ABC, abstractmethod
 
-    def action_print(self) -> None:
-        pass
 
+class BasePrintBook(ABC):
+
+    @abstractmethod
     def print_book(self, print_type: str) -> None:
-        if print_type not in self.PRINT_TYPES:
-            raise ValueError(f"Unknown print type: {print_type}")
-
-        self.action_print()
+        pass
 
 
 class ConsolePrintBook(BasePrintBook):
-    PRINT_TYPES = super().PRINT_TYPES + ["console",]
 
-    def action_print(self) -> None:
-        print(f"Printing the book: {self.title}...")
-        print(self.content)
+    def print_book(self, print_type: str) -> None:
+        if print_type == "console":
+            print(f"Printing the book: {self.title}...")
+            print(self.content)
+        else:
+            super().print_book(print_type)
 
 
 class ReversePrintBook(BasePrintBook):
-    PRINT_TYPES = super().PRINT_TYPES + ["reverse",]
+    def print_book(self, print_type) -> None:
+        if print_type == "reverse":
+            print(f"Printing the book in reverse: {self.title}...")
+            print(self.content[::-1])
+        else:
+            super().print_book(print_type)
 
-    def action_print(self) -> None:
-        print(f"Printing the book in reverse: {self.title}...")
-        print(self.content[::-1])
+class PrintBook(ReversePrintBook, ConsolePrintBook):
+    pass
